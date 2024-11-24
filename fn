@@ -1,0 +1,43 @@
+#!/bin/bash
+
+# fn
+# Copyright (C) 2024 Flox-Company
+# All rights reserved.
+
+# Licensed under the fn License Agreement.
+# Unauthorized copying, distribution, or modification of this software is strictly prohibited.
+
+if [[ $# -lt 1 ]]; then
+    echo "Use --help for all options"
+    exit 1
+fi
+
+function show_help {
+    echo "-r / -render: render a .fn file"
+    echo "-ra / -random: make a random 10x10 .fn file"
+    echo "-t / -test: make a test 50x50 .fn file (will always be the same)"
+}
+
+case "$1" in
+    -r|--render)
+        if [[ $# -ne 2 ]]; then
+            echo "ERROR: -r needs 1 argument!"
+            exit 1
+        fi
+        python /usr/share/fn/fn-data/render.pyc "$2"
+        ;;
+    -ra|--random)
+        python /usr/share/fn/fn-data/random_fn.pyc
+        ;;
+    -t|--test)
+        python /usr/share/fn/fn-data/custom_fn.pyc
+        ;;
+    -h|--help)
+        show_help
+        ;;
+    *)
+        echo "ERROR: command '$1' not found!"
+        exit 1
+        ;;
+esac
+
